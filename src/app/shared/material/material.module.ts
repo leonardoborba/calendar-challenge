@@ -6,6 +6,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule, MatNativeDateModule} from '@angular/material';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
   declarations: [],
@@ -16,8 +18,10 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     ReactiveFormsModule,
     MatDialogModule,
     MatIconModule,
+    MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatAutocompleteModule,
     MatFormFieldModule
   ],
   exports: [
@@ -26,8 +30,10 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     MatDialogModule,
     MatInputModule,
     MatIconModule,
+    MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatAutocompleteModule,
     MatFormFieldModule
   ]
 })

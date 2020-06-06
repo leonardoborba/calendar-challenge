@@ -32,3 +32,26 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
           text-align: center;
       }
   }
+
+  .event {
+    &-color {
+      &-default {
+        background-color: lightgrey;
+      }
+      &-yellow {
+        background-color: yellow;
+      }
+      &-blue {
+        background-color: deepskyblue;
+      }
+      &-green {
+        background-color: forestgreen;
+      }
+      &-red {
+        background-color: lightcoral;
+      }
+      &-purple {
+        background-color: mediumpurple;
+      }
+    }
+  }

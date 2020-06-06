@@ -2,6 +2,8 @@ import { FocusMonitor } from '@angular/cdk/a11y';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {FormBuilder, FormGroup, ControlValueAccessor, NgControl, Validators} from '@angular/forms';
+import { Observable } from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 import { Reminder } from '../models/reminder';
 
@@ -12,14 +14,25 @@ import { Reminder } from '../models/reminder';
 })
 export class EventComponent implements OnInit {
   form: FormGroup;
+  colors: string[] = [];
   submited: boolean;
+  filteredOptions: Observable<string[]>;
+  options: string[] = ['One', 'Two', 'Three'];
 
   constructor(
     formBuilder: FormBuilder,
     private _focusMonitor: FocusMonitor,
     public dialogRef: MatDialogRef<EventComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Reminder
+    @Inject(MAT_DIALOG_DATA) public eventData: Reminder
   ) { 
+    this.colors = [
+      'default',
+      'yellow',
+      'blue',
+      'green',
+      'red',
+      'purple'
+    ]
     this.form = formBuilder.group({
       title: [null, [Validators.required, Validators.maxLength(30)]],
       date: [null, [Validators.required]],
@@ -27,8 +40,7 @@ export class EventComponent implements OnInit {
       city: [null],
     });
     
-    console.log(data, this.form.controls.title)
-
+    console.log(eventData, this.form.value.color)
 
     // _focusMonitor.monitor(_elementRef, true).subscribe(origin => {
     //   if (this.focused && !origin) {
@@ -40,6 +52,16 @@ export class EventComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.filteredOptions = this.form.controls.city.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value))
+    );
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.options.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   }
 
   onNoClick(): void {
@@ -52,6 +74,10 @@ export class EventComponent implements OnInit {
     if (this.form.valid) {
       console.log('VALID')
     }
+  }
+
+  selectColor(color: string) {
+    this.form.controls.color.setValue(color);
   }
 
   showHint(control: string) {
