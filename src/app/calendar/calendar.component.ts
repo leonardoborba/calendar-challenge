@@ -38,14 +38,26 @@ export class CalendarComponent implements OnInit {
   ngOnInit() {
   }
 
-  newEvent() {
-    console.log('new event')
-    const dialogRef = this.dialog.open(EventComponent);
+  openEvent(eventData?: Reminder) {
+    const dialogRef = this.dialog.open(EventComponent, {
+      data: eventData || null
+    });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+    dialogRef.afterClosed().subscribe(newEventData => {
+      if (!!eventData) {
+        eventData = newEventData;
+      } else {
+        this.reminders.push(newEventData)
+      }
     });
   }
+
+  getEvents(date: Date) {
+    return this.reminders.filter(reminder => {
+      return reminder.date.toISOString().substring(0, 10) === date.toISOString().substring(0, 10);
+    })
+  }
+
   
   getDays(currentDate: Date):Date[] {
     const daysOnMounth = (new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0)).getDate();

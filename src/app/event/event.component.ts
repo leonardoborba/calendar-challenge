@@ -72,7 +72,7 @@ export class EventComponent implements OnInit {
     this.submited = true;
     console.log(this.form.value)
     if (this.form.valid) {
-      console.log('VALID')
+      this.dialogRef.close(this.form.value);
     }
   }
 
@@ -81,7 +81,7 @@ export class EventComponent implements OnInit {
   }
 
   showHint(control: string) {
-    if (this.submited) return true;
+    if (this.submited && this.form.controls[control].invalid) return true;
     if (this.form.controls[control].touched && this.form.controls[control].invalid) return true;
 
     return false;

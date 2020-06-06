@@ -1,7 +1,7 @@
 <div class="toolbar">
     <p>{{currentDate | date:'MMMM y'}}</p>
     <div class="buttons">
-        <button (click)="newEvent()">New Event</button>
+        <button (click)="openEvent()">New Event</button>
     </div>
 </div>
 
@@ -13,5 +13,8 @@
         [class.out-of-month]="day.getMonth() !== currentDate.getMonth()"
         [class.weekend]="day.getDay() === 0 || day.getDay() === 6">
         <p class="day">{{day.getDate()}}</p>
+        <div class="calendar-events">
+            <p *ngFor="let event of getEvents(day)">{{event.title}}</p>
+        </div>
     </div>
 </div>
