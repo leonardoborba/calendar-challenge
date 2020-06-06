@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 
 import { Reminder } from '../models/reminder';
+import { EventComponent } from '../event/event.component';
 
 @Component({
   selector: 'app-calendar',
@@ -14,7 +16,9 @@ export class CalendarComponent implements OnInit {
   daysOfMonth: Date[] = [];
   reminders: Reminder[] = []
 
-  constructor() {
+  constructor(
+    public dialog: MatDialog
+  ) {
     this.weekDays = [
       'sanday',
       'monday',
@@ -36,6 +40,11 @@ export class CalendarComponent implements OnInit {
 
   newEvent() {
     console.log('new event')
+    const dialogRef = this.dialog.open(EventComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
   
   getDays(currentDate: Date):Date[] {
