@@ -12,7 +12,7 @@ export class CalendarComponent implements OnInit {
   currentDate: Date;
   currentDay: Date;
   daysOfMonth: Date[] = [];
-  reminders: Reminder[]
+  reminders: Reminder[] = []
 
   constructor() {
     this.weekDays = [
@@ -32,6 +32,10 @@ export class CalendarComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  newEvent() {
+    console.log('new event')
   }
   
   getDays(currentDate: Date):Date[] {

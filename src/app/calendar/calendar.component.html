@@ -1,3 +1,10 @@
+<div class="toolbar">
+    <p>{{currentDate | date:'MMMM y'}}</p>
+    <div class="buttons">
+        <button (click)="newEvent()">New Event</button>
+    </div>
+</div>
+
 <div class="content">
     <div class="calendar-header" *ngFor="let weekDay of weekDays">
         <p>{{weekDay}}</p>
