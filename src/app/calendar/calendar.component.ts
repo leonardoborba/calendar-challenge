@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { Reminder } from '../models/reminder';
+
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
@@ -10,6 +12,7 @@ export class CalendarComponent implements OnInit {
   currentDate: Date;
   currentDay: Date;
   daysOfMonth: Date[] = [];
+  reminders: Reminder[]
 
   constructor() {
     this.weekDays = [
