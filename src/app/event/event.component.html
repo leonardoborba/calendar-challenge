@@ -1,8 +1,22 @@
 <h2 mat-dialog-title>Event</h2>
 <mat-dialog-content class="mat-typography">
-  
+  <form [formGroup]="form" *ngIf="!!form">
+    <mat-form-field appearance="legacy">
+      <mat-label>Legacy form field</mat-label>
+      <input matInput formControlName="title">
+      <mat-hint *ngIf="showHint('title')">*required and max 30 characters</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Choose a date</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-hint *ngIf="showHint('date')">*required</mat-hint>
+    </mat-form-field>
+  </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Salvar</button>
+  <button mat-button cdkFocusInitial (click)="save()">Salvar</button>
 </mat-dialog-actions>
