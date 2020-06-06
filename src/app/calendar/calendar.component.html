@@ -2,7 +2,9 @@
     <div class="calendar-header" *ngFor="let weekDay of weekDays">
         <p>{{weekDay}}</p>
     </div>
-    <div class="calendar-day" *ngFor="let day of daysOfMonth">
-        <p>{{day.getDate()}}</p>
+    <div class="calendar-day" *ngFor="let day of daysOfMonth"
+        [class.out-of-month]="day.getMonth() !== currentDate.getMonth()"
+        [class.weekend]="day.getDay() === 0 || day.getDay() === 6">
+        <p class="day">{{day.getDate()}}</p>
     </div>
 </div>

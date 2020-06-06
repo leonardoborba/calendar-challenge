@@ -5,11 +5,29 @@
 }
 
 .calendar-header {
-    background-color: lightblue;
+    background-color: royalblue;
+    color: white;
+    font-weight: bold;
     text-align: center;
 }
 
 .calendar-day {
     height: 100px;
     border: 1px solid black;
+    .day {
+        padding: 5px 0 0 5px;
+        font-weight: bold;
+    }
+    &.weekend {
+        background-color: lightgray;
+        .day {
+            color: royalblue;
+        }
+    }
+    &.out-of-month {
+        .day {
+            opacity: .5;
+            color: black;
+        }
+    }
 }
