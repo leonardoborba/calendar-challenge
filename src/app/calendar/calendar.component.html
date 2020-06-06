@@ -1,1 +1,8 @@
-<p>calendar works!</p>
+<div class="content">
+    <div class="calendar-header" *ngFor="let weekDay of weekDays">
+        <p>{{weekDay}}</p>
+    </div>
+    <div class="calendar-day" *ngFor="let day of daysOfMonth">
+        <p>{{day.getDate()}}</p>
+    </div>
+</div>
