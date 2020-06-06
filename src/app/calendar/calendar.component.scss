@@ -1,6 +1,6 @@
 .content {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(7, minmax(0, 1fr));
     border: 1px solid black;
     margin: 10px;
 }
@@ -17,12 +17,15 @@
 .calendar-day {
     height: 100px;
     border: 1px solid black;
+    display: flex;
+    flex-direction: column;
     .day {
         padding: 5px 0 0 5px;
         font-weight: bold;
     }
     &.weekend {
-        background-color: lightgray;
+        // background-color: lightgray;
+        background-color: #f2f2f2;
         .day {
             color: royalblue;
         }
@@ -33,4 +36,22 @@
             color: black;
         }
     }
+}
+
+.calendar-events {
+    overflow: hidden;
+    .event {
+        padding: 0 10px;
+        margin: 2px 5px;
+        border-radius: 15px;
+        .title {
+            text-overflow: ellipsis;
+            overflow: hidden; 
+            white-space: nowrap;
+        }
+    }
+}
+
+.events-overflow {
+    margin: auto auto 0;
 }

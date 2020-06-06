@@ -14,7 +14,11 @@
         [class.weekend]="day.getDay() === 0 || day.getDay() === 6">
         <p class="day">{{day.getDate()}}</p>
         <div class="calendar-events">
-            <p *ngFor="let event of getEvents(day)">{{event.title}}</p>
+            <div class="event" *ngFor="let event of getEvents(day); let i = index"
+                [ngClass]="'event-color-' + (event.color || 'default')">
+                <p class="title" *ngIf="i < 3">{{event.title}}</p>
+            </div>
         </div>
+        <p class="events-overflow" *ngIf="getEvents(day).length > 3">{{getEvents(day).length - 3}} more</p>
     </div>
 </div>

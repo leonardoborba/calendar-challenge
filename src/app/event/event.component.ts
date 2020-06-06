@@ -1,9 +1,9 @@
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import {FormBuilder, FormGroup, ControlValueAccessor, NgControl, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, ControlValueAccessor, NgControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
 
 import { Reminder } from '../models/reminder';
 
@@ -24,7 +24,7 @@ export class EventComponent implements OnInit {
     private _focusMonitor: FocusMonitor,
     public dialogRef: MatDialogRef<EventComponent>,
     @Inject(MAT_DIALOG_DATA) public eventData: Reminder
-  ) { 
+  ) {
     this.colors = [
       'default',
       'yellow',
@@ -36,10 +36,11 @@ export class EventComponent implements OnInit {
     this.form = formBuilder.group({
       title: [null, [Validators.required, Validators.maxLength(30)]],
       date: [null, [Validators.required]],
+      time: [null, [Validators.required]],
       color: ['default'],
       city: [null],
     });
-    
+
     console.log(eventData, this.form.value.color)
 
     // _focusMonitor.monitor(_elementRef, true).subscribe(origin => {
@@ -72,7 +73,22 @@ export class EventComponent implements OnInit {
     this.submited = true;
     console.log(this.form.value)
     if (this.form.valid) {
-      this.dialogRef.close(this.form.value);
+
+      this.dialogRef.close(this.getEventData());
+    }
+  }
+
+  getEventData() {
+    const [hours, minutes] = this.form.value.time;
+    const eventDate: Date = this.form.value.date;
+    eventDate.setHours(hours);
+    eventDate.setMinutes(minutes);
+
+    return {
+      title: this.form.value.title,
+      date: eventDate,
+      color: this.form.value.color,
+      city: this.form.value.city
     }
   }
 

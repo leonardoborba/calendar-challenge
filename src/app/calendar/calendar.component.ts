@@ -33,6 +33,17 @@ export class CalendarComponent implements OnInit {
     this.currentDay = new Date();
     this.daysOfMonth = this.getDays(this.currentDate);
     this.getDays(this.currentDate);
+
+
+    this.reminders = [
+      {title: 'Teste', date: new Date(), color: 'yellow'},
+      {title: 'Teste-1 hduawhd asdjaw aowpdkaw dahwuhawud', date: new Date()},
+      {title: 'Teste-2', date: new Date()},
+      {title: 'Teste-3', date: new Date()},
+      {title: 'Teste-4', date: new Date()},
+      {title: 'Teste-5', date: new Date()},
+      {title: 'Teste-6', date: new Date()}
+    ]
   }
 
   ngOnInit() {
@@ -44,10 +55,12 @@ export class CalendarComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(newEventData => {
-      if (!!eventData) {
-        eventData = newEventData;
-      } else {
-        this.reminders.push(newEventData)
+      if (!!newEventData) {
+        if (!!eventData) {
+          eventData = newEventData;
+        } else {
+          this.reminders.push(newEventData)
+        }
       }
     });
   }
@@ -55,6 +68,8 @@ export class CalendarComponent implements OnInit {
   getEvents(date: Date) {
     return this.reminders.filter(reminder => {
       return reminder.date.toISOString().substring(0, 10) === date.toISOString().substring(0, 10);
+    }).sort((ac, next) => {
+      return ac.date < next.date ? -1 : 1;
     })
   }
 
