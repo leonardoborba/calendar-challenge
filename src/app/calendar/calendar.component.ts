@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { BehaviorSubject } from 'rxjs';
 
 import { Reminder } from '../models/reminder';
 import { EventComponent } from '../event/event.component';
-import { BehaviorSubject } from 'rxjs';
+import { WeatherService } from '../services/weather/weather.service';
 
 @Component({
   selector: 'app-calendar',
@@ -18,7 +19,8 @@ export class CalendarComponent implements OnInit {
   reminders: Reminder[] = []
 
   constructor(
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private _weatherService: WeatherService
   ) {
     this.weekDays = [
       'sanday',

@@ -23,8 +23,17 @@
     }
 }
 
-.datetime-container {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    grid-gap: 10px;
+.city-weather {
+    position: absolute;
+    bottom: -15px;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+mat-icon {
+    margin-right: 10px;
 }

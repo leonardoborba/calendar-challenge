@@ -9,6 +9,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatButtonModule} from '@angular/material/button';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [],
@@ -24,6 +25,7 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
     MatNativeDateModule,
     MatAutocompleteModule,
     NgxMaterialTimepickerModule,
+    MatProgressSpinnerModule,
     MatFormFieldModule
   ],
   exports: [
@@ -37,6 +39,7 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
     MatNativeDateModule,
     MatAutocompleteModule,
     NgxMaterialTimepickerModule,
+    MatProgressSpinnerModule,
     MatFormFieldModule
   ]
 })

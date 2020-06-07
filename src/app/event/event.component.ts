@@ -2,10 +2,11 @@ import { FocusMonitor } from '@angular/cdk/a11y';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, ControlValueAccessor, NgControl, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { Observable, Subject, Subscription } from 'rxjs';
+import { map, startWith, debounceTime } from 'rxjs/operators';
 
 import { Reminder } from '../models/reminder';
+import { WeatherService } from '../services/weather/weather.service';
 
 @Component({
   selector: 'app-event',
@@ -15,12 +16,21 @@ import { Reminder } from '../models/reminder';
 export class EventComponent implements OnInit {
   form: FormGroup;
   colors: string[] = [];
+  weatherIcon: string;
   submited: boolean;
+  inputCityChanged: Subject<string> = new Subject<string>();
+  subscription: Subscription;
+  debounceTime = 500;
+  weather: any;
+  weatherError: any;
+  loadingCity: boolean;
+  
   filteredOptions: Observable<string[]>;
   options: string[] = ['One', 'Two', 'Three'];
 
   constructor(
     formBuilder: FormBuilder,
+    private _weatherService: WeatherService,
     private _focusMonitor: FocusMonitor,
     public dialogRef: MatDialogRef<EventComponent>,
     @Inject(MAT_DIALOG_DATA) public eventData: Reminder
@@ -51,6 +61,12 @@ export class EventComponent implements OnInit {
       startWith(''),
       map(value => this._filter(value))
     );
+
+    this.subscription = this.inputCityChanged.pipe(
+      debounceTime(this.debounceTime),
+    ).subscribe(value => {
+      this.searchCity(value);
+    });
   }
 
   private _filter(value: string): string[] {
@@ -102,6 +118,44 @@ export class EventComponent implements OnInit {
     if (this.form.controls[control].touched && this.form.controls[control].invalid) return true;
 
     return false;
+  }
+
+  searchCity(city: string) {
+    this._weatherService.getWeather(city).subscribe((cityWeather: any)=> {
+      console.log(cityWeather)
+      if (!!cityWeather) {
+        this.weather = cityWeather;
+        this.weatherError = null;
+        this.form.controls.city.setValue(cityWeather.city.name)
+        this.loadingCity = false;
+        console.log(this.getWeaterIcon())
+      }
+    }, error => {
+      this.weather = null;
+      this.weatherError = error.error;
+      this.loadingCity = false;
+    })
+  }
+
+  getWeaterIcon() {
+    if (!!this.weather && this.form.value.date) {
+      const icon = this.weather.list.reduce((ac, next) => {
+        if (!!ac && this.form.value.date < ac.dt) {
+          return ac
+        }
+
+        return next;
+      }, null).weather[0].icon;
+
+      return this._weatherService.getIcon(icon);
+    }
+
+    return null;
+  }
+
+  inputChanged(value) {
+    this.loadingCity = true;
+    this.inputCityChanged.next(value)
   }
 
 }
