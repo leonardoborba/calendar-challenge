@@ -52,15 +52,16 @@ export class CalendarComponent implements OnInit {
   ngOnInit() {
   }
 
-  openEvent(eventData?: Reminder) {
+  openEvent(eventIndex?: number) {
     const dialogRef = this.dialog.open(EventComponent, {
-      data: eventData || null
+      data: this.reminders[eventIndex] || null
     });
 
     dialogRef.afterClosed().subscribe(newEventData => {
       if (!!newEventData) {
-        if (!!eventData) {
-          eventData = newEventData;
+        if (!!this.reminders[eventIndex]) {
+          this.reminders[eventIndex] = newEventData;
+
         } else {
           this.reminders.push(newEventData)
         }

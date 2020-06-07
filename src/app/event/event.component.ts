@@ -81,6 +81,9 @@ export class EventComponent implements OnInit {
     this.form.controls.color.setValue(this.eventData.color || 'default');
     this.form.controls.city.setValue(this.eventData.city);
     this.form.controls.time.setValue(`${this.eventData.date.getHours()}:${this.eventData.date.getMinutes()}`);
+    if (!!this.eventData.city) {
+      this.searchCity(this.eventData.city)
+    } 
   }
 
   onNoClick(): void {
@@ -96,7 +99,7 @@ export class EventComponent implements OnInit {
   }
 
   getEventData() {
-    const [hours, minutes] = this.form.value.time;
+    const [hours, minutes] = this.form.value.time.split(':');
     const eventDate: Date = this.form.value.date;
     eventDate.setHours(hours);
     eventDate.setMinutes(minutes);
@@ -121,6 +124,7 @@ export class EventComponent implements OnInit {
   }
 
   searchCity(city: string) {
+    this.loadingCity = true;
     this._weatherService.getWeather(city).subscribe((cityWeather: any)=> {
       console.log(cityWeather)
       if (!!cityWeather) {

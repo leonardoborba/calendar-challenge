@@ -28,7 +28,7 @@
             <div class="event" *ngFor="let event of getEvents(day); let i = index"
                 [ngClass]="'event-color-' + (event.color || 'default')"
                 [style.display]="i >= 2 ? 'none' : null"
-                (click)="openEvent(event)">
+                (click)="openEvent(i)">
                 <p class="event-title">{{event.title}}</p>
             </div>
         </div>
