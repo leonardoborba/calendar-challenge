@@ -41,15 +41,9 @@ export class EventComponent implements OnInit {
       city: [null],
     });
 
-    console.log(eventData, this.form.value.color)
-
-    // _focusMonitor.monitor(_elementRef, true).subscribe(origin => {
-    //   if (this.focused && !origin) {
-    //     this.onTouched();
-    //   }
-    //   this.focused = !!origin;
-    //   this.stateChanges.next();
-    // });
+    if (!!eventData) {
+      this.populateFormData();
+    }
   }
 
   ngOnInit() {
@@ -65,6 +59,14 @@ export class EventComponent implements OnInit {
     return this.options.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   }
 
+  populateFormData() {
+    this.form.controls.title.setValue(this.eventData.title);
+    this.form.controls.date.setValue(this.eventData.date);
+    this.form.controls.color.setValue(this.eventData.color);
+    this.form.controls.city.setValue(this.eventData.city);
+    this.form.controls.time.setValue(`${this.eventData.date.getHours()}:${this.eventData.date.getMinutes()}`);
+  }
+
   onNoClick(): void {
     this.dialogRef.close();
   }
@@ -73,7 +75,6 @@ export class EventComponent implements OnInit {
     this.submited = true;
     console.log(this.form.value)
     if (this.form.valid) {
-
       this.dialogRef.close(this.getEventData());
     }
   }

@@ -41,6 +41,7 @@
 .calendar-events {
     overflow: hidden;
     .event {
+        cursor: pointer;
         padding: 0 10px;
         margin: 2px 5px;
         border-radius: 15px;

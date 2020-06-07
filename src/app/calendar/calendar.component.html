@@ -15,7 +15,8 @@
         <p class="day">{{day.getDate()}}</p>
         <div class="calendar-events">
             <div class="event" *ngFor="let event of getEvents(day); let i = index"
-                [ngClass]="'event-color-' + (event.color || 'default')">
+                [ngClass]="'event-color-' + (event.color || 'default')"
+                (click)="openEvent(event)">
                 <p class="title" *ngIf="i < 3">{{event.title}}</p>
             </div>
         </div>
