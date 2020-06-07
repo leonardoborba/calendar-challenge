@@ -18,6 +18,7 @@ export class CalendarComponent implements OnInit {
   currentDay: Date;
   daysOfMonth: Date[] = [];
   reminders: Reminder[] = []
+  daySelected: Date;
 
   constructor(
     public dialog: MatDialog,
@@ -51,6 +52,10 @@ export class CalendarComponent implements OnInit {
 
   ngOnInit() {
     // this.getDayWeather(new Date()).then(value => {console.log(value)})
+  }
+
+  selectDay(day: Date) {
+    this.daySelected = day;
   }
 
   openEvent(eventIndex?: number) {

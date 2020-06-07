@@ -1,4 +1,5 @@
-<div class="calendar-day" [class.out-of-month]="day.getMonth() !== currentMonth"
+<div class="calendar-day" [class.out-of-month]="day.getMonth() !== currentDay.getMonth()"
+[class.day-selected]="isDaySelected()"
 [class.weekend]="day.getDay() === 0 || day.getDay() === 6"> 
     <p class="day" [class.current-day]="isCurrentDay(day)">{{day.getDate()}}</p>
     <div class="day-weather"><img [src]="weatherIcon" alt=""></div>

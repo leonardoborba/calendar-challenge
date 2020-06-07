@@ -27,6 +27,9 @@
             border-radius: 3px;
             color: white;
     }
+    &.day-selected {
+        background-color: antiquewhite;
+    }
 }
 .calendar-events {
     overflow: hidden;

@@ -2,13 +2,18 @@
     display: grid;
     grid-template-columns: repeat(7, minmax(0, 1fr));
     border: 1px solid black;
-    margin: 10px;
+    margin: 10px 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    margin: 0 10px;
 }
 
 .toolbar {
     display: flex;
     justify-content: space-between;
-    margin: 10px;
     .toolbar-buttons {
         display: flex;
         button {
@@ -32,6 +37,22 @@
     padding: 5px 0;
 }
 
+app-calendar-day {
+    cursor: pointer;
+}
+
+.event-list {
+    height: calc(100vh - 520px);
+    overflow: auto;
+    .event-list-item {
+        padding: 10px 0;
+        border-bottom: solid 1px lightgray;
+        .event-list-item-title {
+            font-weight: bold;
+        }
+    }
+}
+
 @media (max-width:600px) {
     .calendar-weekday {
         font-family: monospace;
@@ -39,5 +60,8 @@
         overflow: hidden;
         white-space: nowrap;
         margin: auto;
+    }
+    .event-list {
+        height: calc(100vh - 410px);
     }
 }

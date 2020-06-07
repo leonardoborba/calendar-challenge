@@ -1,28 +1,43 @@
-<div class="toolbar">
-    <h3>{{(currentDate | async) | date:'MMMM y'}}</h3>
-    <div class="toolbar-buttons">
-        <div class="month-controlls">
-            <button mat-raised-button (click)="previusMonth()">
-                <mat-icon aria-hidden="false" aria-label="previous month">chevron_left</mat-icon>
-            </button>
-            <button mat-raised-button (click)="resetCurrentDate()">
-                <mat-icon aria-hidden="false" aria-label="previous month">fiber_manual_record</mat-icon>
-            </button>
-            <button mat-raised-button (click)="nextMonth()">
-                <mat-icon aria-hidden="false" aria-label="next month">chevron_right</mat-icon>
-            </button>
+<div class="container">
+    <div class="toolbar">
+        <h3>{{(currentDate | async) | date:'MMMM y'}}</h3>
+        <div class="toolbar-buttons">
+            <div class="month-controlls">
+                <button mat-raised-button (click)="previusMonth()">
+                    <mat-icon aria-hidden="false" aria-label="previous month">chevron_left</mat-icon>
+                </button>
+                <button mat-raised-button (click)="resetCurrentDate()">
+                    <mat-icon aria-hidden="false" aria-label="previous month">fiber_manual_record</mat-icon>
+                </button>
+                <button mat-raised-button (click)="nextMonth()">
+                    <mat-icon aria-hidden="false" aria-label="next month">chevron_right</mat-icon>
+                </button>
+            </div>
+            <button mat-raised-button (click)="openEvent()">New Event</button>
         </div>
-        <button mat-raised-button (click)="openEvent()">New Event</button>
     </div>
-</div>
-
-<div class="content">
-    <div class="calendar-header" *ngFor="let weekDay of weekDays">
-        <p class="calendar-weekday">{{weekDay}}</p>
+    
+    <div class="content">
+        <div class="calendar-header" *ngFor="let weekDay of weekDays">
+            <p class="calendar-weekday">{{weekDay}}</p>
+        </div>
+        <app-calendar-day class="calendar-day" *ngFor="let day of daysOfMonth"
+            [daySelected]="daySelected"
+            [currentDate]="currentDate"
+            [currentDay]="currentDay"
+            [reminders]="getEvents(day)"
+            [day]="day"
+            (click)="selectDay(day)"
+        ></app-calendar-day>
     </div>
-    <app-calendar-day class="calendar-day" *ngFor="let day of daysOfMonth"
-        [currentMonth]="currentDate.getValue().getMonth()"
-        [reminders]="getEvents(day)"
-        [day]="day"
-    ></app-calendar-day>
+    
+    <div class="event-list" *ngIf="!!daySelected">
+        <h3>{{daySelected | date:'fullDate'}}</h3>
+        <div class="event-list-item" *ngFor="let event of getEvents(daySelected); let i = index">
+            <div (click)="openEvent(i)">
+                <p class="event-list-item-title" >{{event.title}}</p>
+                <p class="event-list-item-time" >{{event.date | date:'shortTime'}}</p>
+            </div>
+        </div>
+    </div>
 </div>
