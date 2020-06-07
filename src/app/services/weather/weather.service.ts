@@ -34,12 +34,24 @@ export class WeatherService {
     );
   }
 
+  getWeaterIconFromDate(weather: any, date: Date) {
+    if (!!weather && !!date) {
+      for(let item of weather.list) {
+        if (date < item.dt) {
+          return this.getIcon(item);
+        }
+      }
+    }
+
+    return null;
+  }
+
   convertTimestamp(timestamp: number): Date {
     return new Date(timestamp * 1000);
   }
 
-  getIcon(icon) {
-    return this.iconUrl + icon + '.png';
+  getIcon(weather) {
+    return this.iconUrl + weather.weather[0].icon + '.png';
   }
 
 }

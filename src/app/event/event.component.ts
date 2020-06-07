@@ -132,7 +132,6 @@ export class EventComponent implements OnInit {
         this.weatherError = null;
         this.form.controls.city.setValue(cityWeather.city.name)
         this.loadingCity = false;
-        console.log(this.getWeaterIcon())
       }
     }, error => {
       this.weather = null;
@@ -142,19 +141,7 @@ export class EventComponent implements OnInit {
   }
 
   getWeaterIcon() {
-    if (!!this.weather && this.form.value.date) {
-      const icon = this.weather.list.reduce((ac, next) => {
-        if (!!ac && this.form.value.date < ac.dt) {
-          return ac
-        }
-
-        return next;
-      }, null).weather[0].icon;
-
-      return this._weatherService.getIcon(icon);
-    }
-
-    return null;
+    return this._weatherService.getWeaterIconFromDate(this.weather, this.form.value.date)
   }
 
   inputChanged(value) {

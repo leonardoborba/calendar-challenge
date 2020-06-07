@@ -20,18 +20,9 @@
     <div class="calendar-header" *ngFor="let weekDay of weekDays">
         <p class="calendar-weekday">{{weekDay}}</p>
     </div>
-    <div class="calendar-day" *ngFor="let day of daysOfMonth"
-        [class.out-of-month]="day.getMonth() !== currentDate.getValue().getMonth()"
-        [class.weekend]="day.getDay() === 0 || day.getDay() === 6">
-        <p class="day" [class.current-day]="isCurrentDay(day)">{{day.getDate()}}</p>
-        <div class="calendar-events">
-            <div class="event" *ngFor="let event of getEvents(day); let i = index"
-                [ngClass]="'event-color-' + (event.color || 'default')"
-                [style.display]="i >= 2 ? 'none' : null"
-                (click)="openEvent(i)">
-                <p class="event-title">{{event.title}}</p>
-            </div>
-        </div>
-        <p class="events-overflow" *ngIf="getEvents(day).length > 2">{{getEvents(day).length - 2}} more</p>
-    </div>
+    <app-calendar-day class="calendar-day" *ngFor="let day of daysOfMonth"
+        [currentMonth]="currentDate.getValue().getMonth()"
+        [reminders]="getEvents(day)"
+        [day]="day"
+    ></app-calendar-day>
 </div>

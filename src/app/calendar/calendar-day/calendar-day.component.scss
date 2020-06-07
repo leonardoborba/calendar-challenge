@@ -1,0 +1,68 @@
+.calendar-day {
+    height: 75px;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    .day {
+        margin: 2px auto 2px 2px;
+        padding: 0 5px;
+        font-weight: bold;
+    }
+    &.weekend {
+        // background-color: lightgray;
+        background-color: #f2f2f2;
+        .day {
+            color: royalblue;
+        }
+    }
+    &.out-of-month {
+        .day {
+            opacity: .5;
+            color: black;
+        }
+    }
+    .day.current-day {
+            background-color: red;
+            border-radius: 3px;
+            color: white;
+    }
+}
+.calendar-events {
+    overflow: hidden;
+    .event {
+        padding: 0 10px;
+        margin: 2px 5px;
+        border-radius: 15px;
+        .event-title {
+            text-overflow: ellipsis;
+            overflow: hidden; 
+            white-space: nowrap;
+        }
+    }
+}
+
+.events-overflow {
+    margin: auto auto 0;
+}
+
+.day-weather {
+    position: absolute;
+    top: 0;
+    right: 0;
+    img {
+        height: 20px;
+    }
+}
+
+@media (max-width:600px) {
+    .calendar-day {
+        height: 55px;
+        .event {
+            min-height: 4px;
+        }
+        .event-title {
+            display: none;
+        }
+    }
+}

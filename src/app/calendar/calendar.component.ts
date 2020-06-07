@@ -5,6 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import { Reminder } from '../models/reminder';
 import { EventComponent } from '../event/event.component';
 import { WeatherService } from '../services/weather/weather.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-calendar',
@@ -20,7 +21,6 @@ export class CalendarComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
-    private _weatherService: WeatherService
   ) {
     this.weekDays = [
       'sanday',
@@ -41,7 +41,7 @@ export class CalendarComponent implements OnInit {
     this.reminders = [
       {title: 'Teste', date: new Date(), color: 'yellow'},
       {title: 'Teste-1 hduawhd asdjaw aowpdkaw dahwuhawud', date: new Date()},
-      {title: 'Teste-2', date: new Date()},
+      {title: 'Teste-2', date: new Date(), city: 'São Paulo'},
       {title: 'Teste-3', date: new Date()},
       {title: 'Teste-4', date: new Date()},
       {title: 'Teste-5', date: new Date()},
@@ -50,6 +50,7 @@ export class CalendarComponent implements OnInit {
   }
 
   ngOnInit() {
+    // this.getDayWeather(new Date()).then(value => {console.log(value)})
   }
 
   openEvent(eventIndex?: number) {
@@ -77,7 +78,6 @@ export class CalendarComponent implements OnInit {
     })
   }
 
-  
   getDays(currentDate: Date):Date[] {
     const daysOnMounth = (new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0)).getDate();
     const daysOfMonth = Array(...(Array(daysOnMounth + 1).keys())).slice(1);
@@ -121,10 +121,6 @@ export class CalendarComponent implements OnInit {
     date.setMilliseconds(0);
 
     return date
-  }
-
-  isCurrentDay(date: Date) {
-    return this.currentDay.toISOString() === date.toISOString();
   }
 
   previusMonth() {

@@ -8,12 +8,14 @@ import { AppComponent } from './app.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { EventComponent } from './event/event.component';
 import { MaterialModule } from './shared/material/material.module';
+import { CalendarDayComponent } from './calendar/calendar-day/calendar-day.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CalendarComponent,
-    EventComponent
+    EventComponent,
+    CalendarDayComponent
   ],
   imports: [
     BrowserModule,
@@ -25,6 +27,9 @@ import { MaterialModule } from './shared/material/material.module';
   providers: [],
   entryComponents: [
     EventComponent
+  ],
+  exports: [
+    CalendarDayComponent
   ],
   bootstrap: [AppComponent]
 })
