@@ -5,6 +5,24 @@
     margin: 10px;
 }
 
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+    .toolbar-buttons {
+        display: flex;
+        button {
+            margin: 0 3px;
+        }
+        .month-controlls {
+            button {
+                padding: 0 5px;
+                min-width: 0px;
+            }
+        }
+    }
+}
+
 .calendar-header {
     background-color: royalblue;
     color: white;
@@ -15,12 +33,13 @@
 }
 
 .calendar-day {
-    height: 100px;
+    height: 75px;
     border: 1px solid black;
     display: flex;
     flex-direction: column;
     .day {
-        padding: 5px 0 0 5px;
+        margin: 2px auto 2px 2px;
+        padding: 0 5px;
         font-weight: bold;
     }
     &.weekend {
@@ -36,6 +55,11 @@
             color: black;
         }
     }
+    .day.current-day {
+            background-color: red;
+            border-radius: 3px;
+            color: white;
+    }
 }
 
 .calendar-events {
@@ -45,7 +69,7 @@
         padding: 0 10px;
         margin: 2px 5px;
         border-radius: 15px;
-        .title {
+        .event-title {
             text-overflow: ellipsis;
             overflow: hidden; 
             white-space: nowrap;
@@ -55,4 +79,23 @@
 
 .events-overflow {
     margin: auto auto 0;
+}
+
+@media (max-width:600px) {
+    .calendar-weekday {
+        font-family: monospace;
+        width: 3ch;
+        overflow: hidden;
+        white-space: nowrap;
+        margin: auto;
+    }
+    .calendar-day {
+        height: 55px;
+        .event {
+            min-height: 3px;
+        }
+        .event-title {
+            display: none;
+        }
+    }
 }

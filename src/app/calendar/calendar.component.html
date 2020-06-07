@@ -1,25 +1,37 @@
 <div class="toolbar">
-    <p>{{currentDate | date:'MMMM y'}}</p>
-    <div class="buttons">
-        <button (click)="openEvent()">New Event</button>
+    <h3>{{(currentDate | async) | date:'MMMM y'}}</h3>
+    <div class="toolbar-buttons">
+        <div class="month-controlls">
+            <button mat-raised-button (click)="previusMonth()">
+                <mat-icon aria-hidden="false" aria-label="previous month">chevron_left</mat-icon>
+            </button>
+            <button mat-raised-button (click)="resetCurrentDate()">
+                <mat-icon aria-hidden="false" aria-label="previous month">fiber_manual_record</mat-icon>
+            </button>
+            <button mat-raised-button (click)="nextMonth()">
+                <mat-icon aria-hidden="false" aria-label="next month">chevron_right</mat-icon>
+            </button>
+        </div>
+        <button mat-raised-button (click)="openEvent()">New Event</button>
     </div>
 </div>
 
 <div class="content">
     <div class="calendar-header" *ngFor="let weekDay of weekDays">
-        <p>{{weekDay}}</p>
+        <p class="calendar-weekday">{{weekDay}}</p>
     </div>
     <div class="calendar-day" *ngFor="let day of daysOfMonth"
-        [class.out-of-month]="day.getMonth() !== currentDate.getMonth()"
+        [class.out-of-month]="day.getMonth() !== currentDate.getValue().getMonth()"
         [class.weekend]="day.getDay() === 0 || day.getDay() === 6">
-        <p class="day">{{day.getDate()}}</p>
+        <p class="day" [class.current-day]="isCurrentDay(day)">{{day.getDate()}}</p>
         <div class="calendar-events">
             <div class="event" *ngFor="let event of getEvents(day); let i = index"
                 [ngClass]="'event-color-' + (event.color || 'default')"
+                [style.display]="i >= 2 ? 'none' : null"
                 (click)="openEvent(event)">
-                <p class="title" *ngIf="i < 3">{{event.title}}</p>
+                <p class="event-title">{{event.title}}</p>
             </div>
         </div>
-        <p class="events-overflow" *ngIf="getEvents(day).length > 3">{{getEvents(day).length - 3}} more</p>
+        <p class="events-overflow" *ngIf="getEvents(day).length > 2">{{getEvents(day).length - 2}} more</p>
     </div>
 </div>

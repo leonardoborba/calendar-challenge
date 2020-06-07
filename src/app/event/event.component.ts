@@ -62,7 +62,7 @@ export class EventComponent implements OnInit {
   populateFormData() {
     this.form.controls.title.setValue(this.eventData.title);
     this.form.controls.date.setValue(this.eventData.date);
-    this.form.controls.color.setValue(this.eventData.color);
+    this.form.controls.color.setValue(this.eventData.color || 'default');
     this.form.controls.city.setValue(this.eventData.city);
     this.form.controls.time.setValue(`${this.eventData.date.getHours()}:${this.eventData.date.getMinutes()}`);
   }

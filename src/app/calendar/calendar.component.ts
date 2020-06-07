@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { Reminder } from '../models/reminder';
 import { EventComponent } from '../event/event.component';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-calendar',
@@ -11,7 +12,7 @@ import { EventComponent } from '../event/event.component';
 })
 export class CalendarComponent implements OnInit {
   weekDays: string[];
-  currentDate: Date;
+  currentDate = new BehaviorSubject<Date>(new Date());
   currentDay: Date;
   daysOfMonth: Date[] = [];
   reminders: Reminder[] = []
@@ -29,11 +30,11 @@ export class CalendarComponent implements OnInit {
       'saturday',
     ];
 
-    this.currentDate = new Date();
-    this.currentDay = new Date();
-    this.daysOfMonth = this.getDays(this.currentDate);
-    this.getDays(this.currentDate);
-
+    this.currentDay = this.resetDateTime(new Date());
+    this.currentDate.subscribe(date => {
+      console.log(date)
+      this.daysOfMonth = this.getDays(date);
+    })
 
     this.reminders = [
       {title: 'Teste', date: new Date(), color: 'yellow'},
@@ -117,6 +118,28 @@ export class CalendarComponent implements OnInit {
     date.setMilliseconds(0);
 
     return date
+  }
+
+  isCurrentDay(date: Date) {
+    return this.currentDay.toISOString() === date.toISOString();
+  }
+
+  previusMonth() {
+    const newDate = this.currentDate.getValue();
+    newDate.setDate(1);
+    newDate.setMonth(newDate.getMonth() - 1);
+    this.currentDate.next(newDate)
+  }
+
+  nextMonth() {
+    const newDate = this.currentDate.getValue();
+    newDate.setDate(1);
+    newDate.setMonth(newDate.getMonth() + 1);
+    this.currentDate.next(newDate)
+  }
+
+  resetCurrentDate() {
+    this.currentDate.next(new Date(this.currentDay));
   }
 
 }
