@@ -1,6 +1,7 @@
 .form-container {
     display: flex;
     flex-direction: column;
+    min-width: 400px;
     .mat-hint {
         color: #f44336;
     }
@@ -10,10 +11,10 @@
     display: flex;
     height: 40px;
     align-items: center;
-    flex-wrap: wrap;
+    justify-content: space-between;
     .color {
         cursor: pointer;
-        margin: 0 10px;
+        margin: 0;
         height: 30px;
         width: 30px;
         border-radius: 50%;
@@ -36,4 +37,12 @@
 
 mat-icon {
     margin-right: 10px;
+}
+
+@media (max-width:600px) {
+    .form-container {
+        min-width: 200px;
+        width: 70vw;
+    }
+
 }

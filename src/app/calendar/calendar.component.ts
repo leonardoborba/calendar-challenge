@@ -19,6 +19,8 @@ export class CalendarComponent implements OnInit {
   daysOfMonth: Date[] = [];
   reminders: Reminder[] = []
   daySelected: Date;
+  deleteItems: number[] = [];
+  selectAllCheckbox: boolean;
 
   constructor(
     public dialog: MatDialog,
@@ -40,13 +42,13 @@ export class CalendarComponent implements OnInit {
     })
 
     this.reminders = [
-      {title: 'Teste', date: new Date(), color: 'yellow'},
-      {title: 'Teste-1 hduawhd asdjaw aowpdkaw dahwuhawud', date: new Date()},
-      {title: 'Teste-2', date: new Date(), city: 'São Paulo'},
-      {title: 'Teste-3', date: new Date()},
-      {title: 'Teste-4', date: new Date()},
-      {title: 'Teste-5', date: new Date()},
-      {title: 'Teste-6', date: new Date()}
+      {id: 1, title: 'Teste', date: new Date(), color: 'yellow'},
+      {id: 2, title: 'Teste-1 hduawhd asdjaw aowpdkaw dahwuhawud', date: new Date()},
+      {id: 3, title: 'Teste-2', date: new Date(), city: 'São Paulo'},
+      {id: 4, title: 'Teste-3', date: new Date()},
+      {id: 5, title: 'Teste-4', date: new Date()},
+      {id: 6, title: 'Teste-5', date: new Date()},
+      {id: 7, title: 'Teste-6', date: new Date()}
     ]
   }
 
@@ -56,21 +58,48 @@ export class CalendarComponent implements OnInit {
 
   selectDay(day: Date) {
     this.daySelected = day;
+    this.deleteItems = [];
   }
 
-  openEvent(eventIndex?: number) {
+  selectItemToDelete(event, id) {
+    if (!!event.checked) {
+      this.deleteItems.push(id);
+    } else {
+      this.deleteItems.splice(this.deleteItems.indexOf(id), 1);
+    }
+
+    this.selectAllCheckbox = this.deleteItems.length === this.getEvents(this.daySelected).length;
+  }
+
+  selectAll(event) {
+    if (!!event.checked) {
+      this.deleteItems = this.getEvents(this.daySelected).map((item) => item.id)
+    }else {
+      this.deleteItems = [];
+    }
+  }
+
+  deleteEvents() {
+    this.reminders = this.reminders.filter((reminder) => this.deleteItems.indexOf(reminder.id) < 0)
+
+    this.deleteItems = [];
+    this.selectAllCheckbox = false;
+  }
+
+  openEvent(event?: number) {
     const dialogRef = this.dialog.open(EventComponent, {
-      data: this.reminders[eventIndex] || null
+      data: event || null
     });
 
     dialogRef.afterClosed().subscribe(newEventData => {
       if (!!newEventData) {
-        if (!!this.reminders[eventIndex]) {
-          this.reminders[eventIndex] = newEventData;
-
-        } else {
-          this.reminders.push(newEventData)
+        for (let reminderId in this.reminders) {
+          if (newEventData.id === this.reminders[reminderId].id) {
+            return this.reminders[reminderId] = newEventData
+          }
         }
+     
+        this.reminders.push(newEventData)
       }
     });
   }

@@ -42,15 +42,8 @@ app-calendar-day {
 }
 
 .event-list {
-    height: calc(100vh - 520px);
+    height: calc(100vh - 580px);
     overflow: auto;
-    .event-list-item {
-        padding: 10px 0;
-        border-bottom: solid 1px lightgray;
-        .event-list-item-title {
-            font-weight: bold;
-        }
-    }
 }
 
 @media (max-width:600px) {
@@ -62,6 +55,6 @@ app-calendar-day {
         margin: auto;
     }
     .event-list {
-        height: calc(100vh - 410px);
+        height: calc(100vh - 480px);
     }
 }

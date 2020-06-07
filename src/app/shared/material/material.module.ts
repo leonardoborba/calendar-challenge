@@ -10,6 +10,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatButtonModule} from '@angular/material/button';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [],
@@ -26,6 +27,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatAutocompleteModule,
     NgxMaterialTimepickerModule,
     MatProgressSpinnerModule,
+    MatCheckboxModule,
     MatFormFieldModule
   ],
   exports: [
@@ -40,6 +42,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatAutocompleteModule,
     NgxMaterialTimepickerModule,
     MatProgressSpinnerModule,
+    MatCheckboxModule,
     MatFormFieldModule
   ]
 })

@@ -44,6 +44,7 @@ export class EventComponent implements OnInit {
       'purple'
     ]
     this.form = formBuilder.group({
+      id: [(new Date()).getTime()],
       title: [null, [Validators.required, Validators.maxLength(30)]],
       date: [null, [Validators.required]],
       time: [null, [Validators.required]],
@@ -76,6 +77,7 @@ export class EventComponent implements OnInit {
   }
 
   populateFormData() {
+    this.form.controls.id.setValue(this.eventData.id);
     this.form.controls.title.setValue(this.eventData.title);
     this.form.controls.date.setValue(this.eventData.date);
     this.form.controls.color.setValue(this.eventData.color || 'default');
@@ -105,6 +107,7 @@ export class EventComponent implements OnInit {
     eventDate.setMinutes(minutes);
 
     return {
+      id: this.form.value.id,
       title: this.form.value.title,
       date: eventDate,
       color: this.form.value.color,

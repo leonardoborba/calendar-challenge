@@ -31,13 +31,19 @@
         ></app-calendar-day>
     </div>
     
-    <div class="event-list" *ngIf="!!daySelected">
-        <h3>{{daySelected | date:'fullDate'}}</h3>
-        <div class="event-list-item" *ngFor="let event of getEvents(daySelected); let i = index">
-            <div (click)="openEvent(i)">
-                <p class="event-list-item-title" >{{event.title}}</p>
-                <p class="event-list-item-time" >{{event.date | date:'shortTime'}}</p>
-            </div>
+    <div class="event-list-container" *ngIf="!!daySelected">
+        <div class="toolbar">
+            <h3>{{daySelected | date:'fullDate'}}</h3>
+            <button mat-raised-button *ngIf="!!deleteItems.length" (click)="deleteEvents()">Delete</button>
+        </div>
+        <mat-checkbox *ngIf="!!getEvents(daySelected).length" (change)="selectAll($event)" [(ngModel)]="selectAllCheckbox">select all</mat-checkbox>
+        <div class="event-list">
+            <app-event-item class="event-list-item" *ngFor="let event of getEvents(daySelected)"
+                [event]="event"
+                [selected]="deleteItems.indexOf(event.id)"
+                (clicked)="openEvent(event)" (checked)="selectItemToDelete($event, event.id)">
+            </app-event-item>
+        <p *ngIf="!getEvents(daySelected).length">No Event Selected</p>
         </div>
     </div>
 </div>
