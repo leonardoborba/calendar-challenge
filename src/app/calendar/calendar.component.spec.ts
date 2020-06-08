@@ -53,7 +53,7 @@ describe('CalendarComponent', () => {
       color: 'default'
     };
 
-    component.reminders = [eventData]
+    component.reminders = [eventData];
 
     const newEventData = {
       id: 12345,

@@ -24,7 +24,7 @@ export class EventComponent implements OnInit {
   weather: any;
   weatherError: any;
   loadingCity: boolean;
-  
+
   filteredOptions: Observable<string[]>;
   options: string[] = ['One', 'Two', 'Three'];
 
@@ -42,7 +42,7 @@ export class EventComponent implements OnInit {
       'green',
       'red',
       'purple'
-    ]
+    ];
     this.form = formBuilder.group({
       id: [(new Date()).getTime()],
       title: [null, [Validators.required, Validators.maxLength(30)]],
@@ -84,8 +84,8 @@ export class EventComponent implements OnInit {
     this.form.controls.city.setValue(this.eventData.city);
     this.form.controls.time.setValue(`${this.eventData.date.getHours()}:${this.eventData.date.getMinutes()}`);
     if (!!this.eventData.city) {
-      this.searchCity(this.eventData.city)
-    } 
+      this.searchCity(this.eventData.city);
+    }
   }
 
   onNoClick(): void {
@@ -94,7 +94,6 @@ export class EventComponent implements OnInit {
 
   save() {
     this.submited = true;
-    console.log(this.form.value)
     if (this.form.valid) {
       this.dialogRef.close(this.getEventData());
     }
@@ -112,7 +111,7 @@ export class EventComponent implements OnInit {
       date: eventDate,
       color: this.form.value.color,
       city: this.form.value.city
-    }
+    };
   }
 
   selectColor(color: string) {
@@ -120,40 +119,43 @@ export class EventComponent implements OnInit {
   }
 
   showHint(control: string) {
-    if (this.submited && this.form.controls[control].invalid) return true;
-    if (this.form.controls[control].touched && this.form.controls[control].invalid) return true;
+    if (this.submited && this.form.controls[control].invalid) {
+      return true;
+    }
+    if (this.form.controls[control].touched && this.form.controls[control].invalid) {
+      return true;
+    }
 
     return false;
   }
 
   searchCity(city: string) {
-    this._weatherService.getWeather(city).subscribe((cityWeather: any)=> {
-      console.log(cityWeather)
+    this._weatherService.getWeather(city).subscribe((cityWeather: any) => {
       if (!!cityWeather) {
         this.weather = cityWeather;
         this.weatherError = null;
-        this.form.controls.city.setValue(cityWeather.city.name)
+        this.form.controls.city.setValue(cityWeather.city.name);
       }
     }, error => {
       this.weather = null;
       this.weatherError = error.error;
       this.loadingCity = false;
-    })
+    });
   }
 
   getWeaterIcon() {
     if (this.weather) {
       const date = this.form.value.date || new Date();
-      return this._weatherService.getWeaterIconFromDate(this.weather, date)
+      return this._weatherService.getWeaterIconFromDate(this.weather, date);
     }
   }
 
   inputChanged(value) {
     this.weather = null;
-    
+
     if (!!value) {
       this.loadingCity = true;
-      this.inputCityChanged.next(value)
+      this.inputCityChanged.next(value);
     }
   }
 

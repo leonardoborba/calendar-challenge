@@ -22,21 +22,21 @@ export class WeatherService {
     const params = {
       appid: this.apiKey,
       q: city
-    }
+    };
     return this._http.get(this.apiUrl, {params}).pipe(
-      map(value => {
-        value['list'].map(list => {
+      map((value: any) => {
+        value.list.map(list => {
           list.dt = this.convertTimestamp(list.dt);
-          return list
-        })
-        return value
+          return list;
+        });
+        return value;
       })
     );
   }
 
   getWeaterIconFromDate(weather: any, date: Date) {
     if (!!weather && !!date) {
-      for(let item of weather.list) {
+      for (const item of weather.list) {
         if (date < item.dt) {
           return this.getIcon(item);
         }

@@ -27,11 +27,11 @@ export class CalendarDayComponent implements OnChanges {
 
   isDaySelected() {
     if (!!this.currentDate && this.currentDate.getValue() && this.daySelected) {
-      return this.day.toISOString().substring(0, 10) === 
-      this.daySelected.toISOString().substring(0, 10)
+      return this.day.toISOString().substring(0, 10) ===
+      this.daySelected.toISOString().substring(0, 10);
     }
 
-    return false
+    return false;
   }
 
   isCurrentDay(date: Date) {
@@ -40,12 +40,12 @@ export class CalendarDayComponent implements OnChanges {
 
   get weatherIcon() {
     if (!!this.weather && this.weather.list) {
-      return this._weatherService.getWeaterIconFromDate(this.weather, this.day)
+      return this._weatherService.getWeaterIconFromDate(this.weather, this.day);
     }
   }
 
   getWeather() {
-    for (let reminder of this.reminders) {
+    for (const reminder of this.reminders) {
       if (!!this.weather && !!this.weather.city && this.weather.city.name === reminder.city) {
         return;
       }

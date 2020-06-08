@@ -17,7 +17,7 @@ export class CalendarComponent implements OnInit {
   currentDate = new BehaviorSubject<Date>(new Date());
   currentDay: Date;
   daysOfMonth: Date[] = [];
-  reminders: Reminder[] = []
+  reminders: Reminder[] = [];
   daySelected: Date;
   deleteItems: number[] = [];
   selectAllCheckbox: boolean;
@@ -37,9 +37,8 @@ export class CalendarComponent implements OnInit {
 
     this.currentDay = this.resetDateTime(new Date());
     this.currentDate.subscribe(date => {
-      console.log(date)
       this.daysOfMonth = this.getDays(date);
-    })
+    });
   }
 
   ngOnInit() {
@@ -50,9 +49,9 @@ export class CalendarComponent implements OnInit {
   getStorageReminders() {
     const storageReminders = JSON.parse(localStorage.getItem('reminders')) || [];
     this.reminders = storageReminders.map(reminder => {
-      reminder.date = new Date(reminder.date)
+      reminder.date = new Date(reminder.date);
       return reminder;
-    })
+    });
   }
 
   updateStorageReminders() {
@@ -76,14 +75,14 @@ export class CalendarComponent implements OnInit {
   }
   selectAllItems(checkboxEvent) {
     if (!!checkboxEvent.checked) {
-      this.deleteItems = this.getEventsByDay(this.daySelected).map((item) => item.id)
-    }else {
+      this.deleteItems = this.getEventsByDay(this.daySelected).map((item) => item.id);
+    } else {
       this.deleteItems = [];
     }
   }
 
   deleteEvents() {
-    this.reminders = this.reminders.filter((reminder) => this.deleteItems.indexOf(reminder.id) < 0)
+    this.reminders = this.reminders.filter((reminder) => this.deleteItems.indexOf(reminder.id) < 0);
     this.updateStorageReminders();
 
     this.deleteItems = [];
@@ -100,13 +99,13 @@ export class CalendarComponent implements OnInit {
 
   saveEvent(eventData: Reminder) {
     if (!!eventData) {
-      for (let reminderId in this.reminders) {
+      for (const reminderId in this.reminders) {
         if (eventData.id === this.reminders[reminderId].id) {
-          return this.reminders[reminderId] = eventData
+          return this.reminders[reminderId] = eventData;
         }
       }
-   
-      this.reminders.push(eventData)
+
+      this.reminders.push(eventData);
     }
     this.updateStorageReminders();
   }
@@ -116,27 +115,27 @@ export class CalendarComponent implements OnInit {
       return reminder.date.toISOString().substring(0, 10) === date.toISOString().substring(0, 10);
     }).sort((ac, next) => {
       return ac.date < next.date ? -1 : 1;
-    })
+    });
   }
 
-  getDays(currentDate: Date):Date[] {
+  getDays(currentDate: Date): Date[] {
     const daysOnMounth = (new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0)).getDate();
     const daysOfMonth = Array(...(Array(daysOnMounth + 1).keys())).slice(1);
     const days = daysOfMonth.map(day => {
       return this.resetDateTime(new Date(currentDate.setDate(day)));
     });
 
-    const daysBefore = this.handleDaysBeforeCurrentMonth(days[0])
-    const daysAfter = this.handleDaysAfterCurrentMonth(days[days.length - 1])
-    
-    return [...daysBefore, ...days, ...daysAfter]
+    const daysBefore = this.handleDaysBeforeCurrentMonth(days[0]);
+    const daysAfter = this.handleDaysAfterCurrentMonth(days[days.length - 1]);
+
+    return [...daysBefore, ...days, ...daysAfter];
   }
 
   handleDaysBeforeCurrentMonth(date: Date) {
     const currentDate = new Date(date);
     const daysBefore = [];
     while (currentDate.getDay() > 0) {
-      currentDate.setDate(currentDate.getDate() - 1)
+      currentDate.setDate(currentDate.getDate() - 1);
       daysBefore.unshift(new Date(currentDate));
     }
 
@@ -148,7 +147,7 @@ export class CalendarComponent implements OnInit {
     const currentDate = new Date(date);
     const daysAfter = [];
     while (currentDate.getDay() < 6) {
-      currentDate.setDate(currentDate.getDate() + 1)
+      currentDate.setDate(currentDate.getDate() + 1);
       daysAfter.push(new Date(currentDate));
     }
 
@@ -161,21 +160,21 @@ export class CalendarComponent implements OnInit {
     date.setSeconds(0);
     date.setMilliseconds(0);
 
-    return date
+    return date;
   }
 
   previusMonth() {
     const newDate = this.currentDate.getValue();
     newDate.setDate(1);
     newDate.setMonth(newDate.getMonth() - 1);
-    this.currentDate.next(newDate)
+    this.currentDate.next(newDate);
   }
 
   nextMonth() {
     const newDate = this.currentDate.getValue();
     newDate.setDate(1);
     newDate.setMonth(newDate.getMonth() + 1);
-    this.currentDate.next(newDate)
+    this.currentDate.next(newDate);
   }
 
   resetCurrentDate() {
