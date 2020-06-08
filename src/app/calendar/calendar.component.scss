@@ -8,7 +8,9 @@
 .container {
     display: flex;
     flex-direction: column;
-    margin: 0 10px;
+    margin: 0 auto;
+    padding: 0 10px;
+    max-width: 1024px;
 }
 
 .toolbar {
