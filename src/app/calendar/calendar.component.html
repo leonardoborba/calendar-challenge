@@ -25,7 +25,7 @@
             [daySelected]="daySelected"
             [currentDate]="currentDate"
             [currentDay]="currentDay"
-            [reminders]="getEvents(day)"
+            [reminders]="getEventsByDay(day)"
             [day]="day"
             (click)="selectDay(day)"
         ></app-calendar-day>
@@ -36,14 +36,14 @@
             <h3>{{daySelected | date:'fullDate'}}</h3>
             <button mat-raised-button *ngIf="!!deleteItems.length" (click)="deleteEvents()">Delete</button>
         </div>
-        <mat-checkbox *ngIf="!!getEvents(daySelected).length" (change)="selectAll($event)" [(ngModel)]="selectAllCheckbox">select all</mat-checkbox>
+        <mat-checkbox *ngIf="!!getEventsByDay(daySelected).length" (change)="selectAll($event)" [(ngModel)]="selectAllCheckbox">select all</mat-checkbox>
         <div class="event-list">
-            <app-event-item class="event-list-item" *ngFor="let event of getEvents(daySelected)"
+            <app-event-item class="event-list-item" *ngFor="let event of getEventsByDay(daySelected)"
                 [event]="event"
                 [selected]="deleteItems.indexOf(event.id)"
                 (clicked)="openEvent(event)" (checked)="selectItemToDelete($event, event.id)">
             </app-event-item>
-        <p *ngIf="!getEvents(daySelected).length">No Event Selected</p>
+        <p *ngIf="!getEventsByDay(daySelected).length">No Event Selected</p>
         </div>
     </div>
 </div>

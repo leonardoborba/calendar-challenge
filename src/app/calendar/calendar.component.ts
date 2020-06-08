@@ -53,7 +53,19 @@ export class CalendarComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.getDayWeather(new Date()).then(value => {console.log(value)})
+    this.getStorageReminders();
+  }
+
+  getStorageReminders() {
+    const storageReminders = JSON.parse(localStorage.getItem('reminders')) || [];
+    this.reminders = storageReminders.map(reminder => {
+      reminder.date = new Date(reminder.date)
+      return reminder;
+    })
+  }
+
+  updateStorageReminders() {
+    localStorage.setItem('reminders', JSON.stringify(this.reminders));
   }
 
   selectDay(day: Date) {
@@ -61,19 +73,18 @@ export class CalendarComponent implements OnInit {
     this.deleteItems = [];
   }
 
-  selectItemToDelete(event, id) {
-    if (!!event.checked) {
+  selectItemToDelete(checkboxEvent, id) {
+    if (!!checkboxEvent.checked) {
       this.deleteItems.push(id);
     } else {
       this.deleteItems.splice(this.deleteItems.indexOf(id), 1);
     }
 
-    this.selectAllCheckbox = this.deleteItems.length === this.getEvents(this.daySelected).length;
+    this.selectAllCheckbox = this.deleteItems.length === this.getEventsByDay(this.daySelected).length;
   }
-
-  selectAll(event) {
-    if (!!event.checked) {
-      this.deleteItems = this.getEvents(this.daySelected).map((item) => item.id)
+  selectAllItems(checkboxEvent) {
+    if (!!checkboxEvent.checked) {
+      this.deleteItems = this.getEventsByDay(this.daySelected).map((item) => item.id)
     }else {
       this.deleteItems = [];
     }
@@ -81,6 +92,7 @@ export class CalendarComponent implements OnInit {
 
   deleteEvents() {
     this.reminders = this.reminders.filter((reminder) => this.deleteItems.indexOf(reminder.id) < 0)
+    this.updateStorageReminders();
 
     this.deleteItems = [];
     this.selectAllCheckbox = false;
@@ -91,20 +103,23 @@ export class CalendarComponent implements OnInit {
       data: event || null
     });
 
-    dialogRef.afterClosed().subscribe(newEventData => {
-      if (!!newEventData) {
-        for (let reminderId in this.reminders) {
-          if (newEventData.id === this.reminders[reminderId].id) {
-            return this.reminders[reminderId] = newEventData
-          }
-        }
-     
-        this.reminders.push(newEventData)
-      }
-    });
+    dialogRef.afterClosed().subscribe(newEventData => this.saveEvent(newEventData));
   }
 
-  getEvents(date: Date) {
+  saveEvent(eventData: Reminder) {
+    if (!!eventData) {
+      for (let reminderId in this.reminders) {
+        if (eventData.id === this.reminders[reminderId].id) {
+          return this.reminders[reminderId] = eventData
+        }
+      }
+   
+      this.reminders.push(eventData)
+    }
+    this.updateStorageReminders();
+  }
+
+  getEventsByDay(date: Date) {
     return this.reminders.filter(reminder => {
       return reminder.date.toISOString().substring(0, 10) === date.toISOString().substring(0, 10);
     }).sort((ac, next) => {
