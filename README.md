@@ -1,4 +1,4 @@
-# CalendarChallenge
+# Calendar Challenge
 
 This project is the result of a calendar code challenge.
 
@@ -13,6 +13,9 @@ This project is the result of a calendar code challenge.
 - Functionality to delete one or ALL the reminders for a specific day
 - Unit test the functionality: ​Ability to add a new "reminder" (max 30 chars) for a user entered day and time. Also, include a city.
 
+## Install dependencies
+
+Run `npm install` on the root folder to install all dependencies
 
 ## Development server
 
