@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { WeatherService } from 'src/app/services/weather/weather.service';
 import { Reminder } from 'src/app/models/reminder';
 
@@ -8,9 +8,8 @@ import { Reminder } from 'src/app/models/reminder';
   styleUrls: ['./calendar-day.component.scss']
 })
 export class CalendarDayComponent implements OnChanges {
-  @Input() currentDate: any;
   @Input() currentDay: Date;
-  @Input() daySelected: Date;
+  @Input() selected: any;
   @Input() day: Date;
   @Input() reminders: Reminder[];
   weather: any;
@@ -20,18 +19,7 @@ export class CalendarDayComponent implements OnChanges {
   ) { }
 
   ngOnChanges() {
-    if (!!this.reminders.length) {
-      this.getWeather();
-    }
-  }
-
-  isDaySelected() {
-    if (!!this.currentDate && this.currentDate.getValue() && this.daySelected) {
-      return this.day.toISOString().substring(0, 10) ===
-      this.daySelected.toISOString().substring(0, 10);
-    }
-
-    return false;
+    this.getWeather();
   }
 
   isCurrentDay(date: Date) {

@@ -40,4 +40,31 @@ describe('EventComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should return the event data updated', () => {
+    const dateFake = new Date();
+    component.eventData = {
+      id: 12345,
+      title: 'fake',
+      date: dateFake,
+      city: 'fake city',
+      color: 'default'
+    };
+
+    component.populateFormData();
+
+    component.form.controls.title.setValue('new fake title');
+    component.form.controls.city.setValue('new fake city');
+    component.form.controls.color.setValue('new fake color');
+
+    const newEventData = {
+      id: 12345,
+      title: 'new fake title',
+      date: dateFake,
+      city: 'new fake city',
+      color: 'new fake color'
+    };
+
+    expect(component.getEventData()).toEqual(newEventData);
+  });
 });

@@ -1,7 +1,7 @@
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormBuilder, FormGroup, ControlValueAccessor, NgControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { map, startWith, debounceTime } from 'rxjs/operators';
 
@@ -25,13 +25,9 @@ export class EventComponent implements OnInit {
   weatherError: any;
   loadingCity: boolean;
 
-  filteredOptions: Observable<string[]>;
-  options: string[] = ['One', 'Two', 'Three'];
-
   constructor(
     formBuilder: FormBuilder,
     private _weatherService: WeatherService,
-    private _focusMonitor: FocusMonitor,
     public dialogRef: MatDialogRef<EventComponent>,
     @Inject(MAT_DIALOG_DATA) public eventData: Reminder
   ) {
@@ -58,22 +54,11 @@ export class EventComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.filteredOptions = this.form.controls.city.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filter(value))
-    );
-
     this.subscription = this.inputCityChanged.pipe(
       debounceTime(this.debounceTime),
     ).subscribe(value => {
       this.searchCity(value);
     });
-  }
-
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.options.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   }
 
   populateFormData() {

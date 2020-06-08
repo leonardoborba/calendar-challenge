@@ -22,9 +22,8 @@
             <p class="calendar-weekday">{{weekDay}}</p>
         </div>
         <app-calendar-day class="calendar-day" *ngFor="let day of daysOfMonth"
-            [daySelected]="daySelected"
-            [currentDate]="currentDate"
             [currentDay]="currentDay"
+            [selected]="isDaySelected(day)"
             [reminders]="getEventsByDay(day)"
             [day]="day"
             (click)="selectDay(day)"

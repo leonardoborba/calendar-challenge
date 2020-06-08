@@ -4,8 +4,6 @@ import { BehaviorSubject } from 'rxjs';
 
 import { Reminder } from '../models/reminder';
 import { EventComponent } from '../event/event.component';
-import { WeatherService } from '../services/weather/weather.service';
-import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-calendar',
@@ -24,24 +22,16 @@ export class CalendarComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
-  ) {
-    this.weekDays = [
-      'sanday',
-      'monday',
-      'tuesday',
-      'wednesday',
-      'thusday',
-      'friday',
-      'saturday',
-    ];
+  ) { }
+
+  ngOnInit() {
+    this.weekDays = ['sanday','monday','tuesday','wednesday','thusday','friday','saturday'];
 
     this.currentDay = this.resetDateTime(new Date());
     this.currentDate.subscribe(date => {
-      this.daysOfMonth = this.getDays(date);
+      this.daysOfMonth = this.getDaysOfMonth(date);
     });
-  }
 
-  ngOnInit() {
     this.getStorageReminders();
     this.selectDay(this.currentDay);
   }
@@ -118,7 +108,7 @@ export class CalendarComponent implements OnInit {
     });
   }
 
-  getDays(currentDate: Date): Date[] {
+  getDaysOfMonth(currentDate: Date): Date[] {
     const daysOnMounth = (new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0)).getDate();
     const daysOfMonth = Array(...(Array(daysOnMounth + 1).keys())).slice(1);
     const days = daysOfMonth.map(day => {
@@ -179,6 +169,14 @@ export class CalendarComponent implements OnInit {
 
   resetCurrentDate() {
     this.currentDate.next(new Date(this.currentDay));
+  }
+
+  isDaySelected(day) {
+    if (!!this.currentDate && this.currentDate.getValue() && this.daySelected) {
+      return day.toISOString().substring(0, 10) === this.daySelected.toISOString().substring(0, 10);
+    }
+
+    return false;
   }
 
 }

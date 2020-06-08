@@ -7,7 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { EventComponent } from './event/event.component';
-import { MaterialModule } from './shared/material/material.module';
+import { SharedModule } from './shared/shared.module';
 import { CalendarDayComponent } from './calendar/calendar-day/calendar-day.component';
 import { EventItemComponent } from './calendar/event-item/event-item.component';
 
@@ -24,7 +24,7 @@ import { EventItemComponent } from './calendar/event-item/event-item.component';
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MaterialModule
+    SharedModule
   ],
   providers: [],
   entryComponents: [

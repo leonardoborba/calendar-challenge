@@ -46,4 +46,4 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatFormFieldModule
   ]
 })
-export class MaterialModule { }
+export class SharedModule { }
