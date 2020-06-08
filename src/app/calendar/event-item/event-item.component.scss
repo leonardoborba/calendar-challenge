@@ -3,9 +3,14 @@
     align-items: center;
     padding: 10px 0;
     border-bottom: solid 1px lightgray;
+    .event-list-item-color {
+        margin: 0 15px;
+        width: 10px;
+        height: 35px;
+        border-radius: 10px;
+    }
     .event-list-item-details {
         cursor: pointer;
-        margin-left: 15px;
         width: 100%;
         .event-list-item-title {
             font-weight: bold;

@@ -81,6 +81,8 @@ export class EventComponent implements OnInit {
     this.submited = true;
     if (this.form.valid) {
       this.dialogRef.close(this.getEventData());
+    } else {
+      return false;
     }
   }
 
