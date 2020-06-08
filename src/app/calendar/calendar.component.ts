@@ -40,20 +40,11 @@ export class CalendarComponent implements OnInit {
       console.log(date)
       this.daysOfMonth = this.getDays(date);
     })
-
-    this.reminders = [
-      {id: 1, title: 'Teste', date: new Date(), color: 'yellow'},
-      {id: 2, title: 'Teste-1 hduawhd asdjaw aowpdkaw dahwuhawud', date: new Date()},
-      {id: 3, title: 'Teste-2', date: new Date(), city: 'São Paulo'},
-      {id: 4, title: 'Teste-3', date: new Date()},
-      {id: 5, title: 'Teste-4', date: new Date()},
-      {id: 6, title: 'Teste-5', date: new Date()},
-      {id: 7, title: 'Teste-6', date: new Date()}
-    ]
   }
 
   ngOnInit() {
     this.getStorageReminders();
+    this.selectDay(this.currentDay);
   }
 
   getStorageReminders() {
@@ -69,8 +60,9 @@ export class CalendarComponent implements OnInit {
   }
 
   selectDay(day: Date) {
-    this.daySelected = day;
+    this.selectAllCheckbox = false;
     this.deleteItems = [];
+    this.daySelected = day;
   }
 
   selectItemToDelete(checkboxEvent, id) {

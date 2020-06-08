@@ -7,20 +7,22 @@ import { Reminder } from 'src/app/models/reminder';
   templateUrl: './calendar-day.component.html',
   styleUrls: ['./calendar-day.component.scss']
 })
-export class CalendarDayComponent implements OnInit {
+export class CalendarDayComponent implements OnChanges {
   @Input() currentDate: any;
   @Input() currentDay: Date;
   @Input() daySelected: Date;
   @Input() day: Date;
   @Input() reminders: Reminder[];
-  weatherIcon: string;
+  weather: any;
 
   constructor(
     private _weatherService: WeatherService,
   ) { }
 
-  ngOnInit() {
-    this.getDayWeather();
+  ngOnChanges() {
+    if (!!this.reminders.length) {
+      this.getWeather();
+    }
   }
 
   isDaySelected() {
@@ -36,16 +38,23 @@ export class CalendarDayComponent implements OnInit {
     return this.currentDay.toISOString() === date.toISOString();
   }
 
-  getDayWeather() {
-    this.reminders.forEach(event => {
-      if (event.city) {
-        return this._weatherService.getWeather(event.city).subscribe(weather => {
-          if (!!weather) {
-            this.weatherIcon = this._weatherService.getWeaterIconFromDate(weather, this.day)
-          }
-        });
+  get weatherIcon() {
+    if (!!this.weather && this.weather.list) {
+      return this._weatherService.getWeaterIconFromDate(this.weather, this.day)
+    }
+  }
+
+  getWeather() {
+    for (let reminder of this.reminders) {
+      if (!!this.weather && !!this.weather.city && this.weather.city.name === reminder.city) {
+        return;
       }
-    })
+
+      if (!!reminder.city) {
+        this.weather = {};
+        return this._weatherService.getWeather(reminder.city).subscribe(weather => this.weather = weather);
+      }
+    }
   }
 
 }

@@ -36,7 +36,7 @@
             <h3>{{daySelected | date:'fullDate'}}</h3>
             <button mat-raised-button *ngIf="!!deleteItems.length" (click)="deleteEvents()">Delete</button>
         </div>
-        <mat-checkbox *ngIf="!!getEventsByDay(daySelected).length" (change)="selectAll($event)" [(ngModel)]="selectAllCheckbox">select all</mat-checkbox>
+        <mat-checkbox *ngIf="!!getEventsByDay(daySelected).length" (change)="selectAllItems($event)" [(ngModel)]="selectAllCheckbox">select all</mat-checkbox>
         <div class="event-list">
             <app-event-item class="event-list-item" *ngFor="let event of getEventsByDay(daySelected)"
                 [event]="event"
