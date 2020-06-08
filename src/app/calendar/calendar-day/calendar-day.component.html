@@ -1,7 +1,7 @@
-<div class="calendar-day" [class.out-of-month]="day.getMonth() !== currentDay.getMonth()"
+<div class="calendar-day" [class.out-of-month]="day?.getMonth() !== currentDay?.getMonth()"
 [class.day-selected]="isDaySelected()"
-[class.weekend]="day.getDay() === 0 || day.getDay() === 6"> 
-    <p class="day" [class.current-day]="isCurrentDay(day)">{{day.getDate()}}</p>
+[class.weekend]="day?.getDay() === 0 || day?.getDay() === 6"> 
+    <p class="day" [class.current-day]="isCurrentDay(day)">{{day?.getDate()}}</p>
     <div class="day-weather"><img [src]="weatherIcon" alt=""></div>
     <div class="calendar-events">
         <div class="event" *ngFor="let event of reminders; let i = index"
@@ -10,5 +10,5 @@
             <p class="event-title">{{event.title}}</p>
         </div>
     </div>
-    <p class="events-overflow" *ngIf="reminders.length > 2">{{reminders.length - 2}} more</p>
+    <p class="events-overflow" *ngIf="reminders?.length > 2">{{reminders?.length - 2}} more</p>
 </div>

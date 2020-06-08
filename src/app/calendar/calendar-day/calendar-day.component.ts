@@ -26,7 +26,7 @@ export class CalendarDayComponent implements OnChanges {
   }
 
   isDaySelected() {
-    if (this.currentDate.getValue() && this.daySelected) {
+    if (!!this.currentDate && this.currentDate.getValue() && this.daySelected) {
       return this.day.toISOString().substring(0, 10) === 
       this.daySelected.toISOString().substring(0, 10)
     }
@@ -35,7 +35,7 @@ export class CalendarDayComponent implements OnChanges {
   }
 
   isCurrentDay(date: Date) {
-    return this.currentDay.toISOString() === date.toISOString();
+    return !!this.currentDay && this.currentDay.toISOString() === date.toISOString();
   }
 
   get weatherIcon() {

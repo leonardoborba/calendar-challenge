@@ -2,7 +2,7 @@
 <div class="event-list-item">
     <mat-checkbox (change)="checked.emit($event)" [(ngModel)]="checkbox"></mat-checkbox>
     <div class="event-list-item-details" (click)="clicked.emit()">
-        <p class="event-list-item-title" >{{event.title}}</p>
-        <p class="event-list-item-time" >{{event.date | date:'shortTime'}}</p>
+        <p class="event-list-item-title" >{{event?.title}}</p>
+        <p class="event-list-item-time" >{{event?.date | date:'shortTime'}}</p>
     </div>
 </div>
