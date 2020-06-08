@@ -25,7 +25,7 @@ export class CalendarComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.weekDays = ['sanday','monday','tuesday','wednesday','thusday','friday','saturday'];
+    this.weekDays = ['sanday', 'monday', 'tuesday', 'wednesday', 'thusday', 'friday', 'saturday'];
 
     this.currentDay = this.resetDateTime(new Date());
     this.currentDate.subscribe(date => {
