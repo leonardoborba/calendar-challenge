@@ -127,14 +127,12 @@ export class EventComponent implements OnInit {
   }
 
   searchCity(city: string) {
-    this.loadingCity = true;
     this._weatherService.getWeather(city).subscribe((cityWeather: any)=> {
       console.log(cityWeather)
       if (!!cityWeather) {
         this.weather = cityWeather;
         this.weatherError = null;
         this.form.controls.city.setValue(cityWeather.city.name)
-        this.loadingCity = false;
       }
     }, error => {
       this.weather = null;
@@ -144,12 +142,19 @@ export class EventComponent implements OnInit {
   }
 
   getWeaterIcon() {
-    return this._weatherService.getWeaterIconFromDate(this.weather, this.form.value.date)
+    if (this.weather) {
+      const date = this.form.value.date || new Date();
+      return this._weatherService.getWeaterIconFromDate(this.weather, date)
+    }
   }
 
   inputChanged(value) {
-    this.loadingCity = true;
-    this.inputCityChanged.next(value)
+    this.weather = null;
+    
+    if (!!value) {
+      this.loadingCity = true;
+      this.inputCityChanged.next(value)
+    }
   }
 
 }

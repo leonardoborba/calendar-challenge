@@ -2,7 +2,7 @@
 <mat-dialog-content >
   <form class="form-container" [formGroup]="form" *ngIf="!!form">
     <mat-form-field appearance="legacy">
-      <mat-label>Legacy form field</mat-label>
+      <mat-label>Title</mat-label>
       <input matInput formControlName="title" cdkFocusInitial>
       <mat-hint *ngIf="showHint('title')">*required and max 30 characters</mat-hint>
     </mat-form-field>
@@ -20,7 +20,7 @@
       <input matInput [ngxTimepicker]="timePicker" formControlName="time" [format]="24" autocomplete="off">
       <ngx-material-timepicker #timePicker [format]="24"></ngx-material-timepicker>
       <mat-icon matSuffix>access_time</mat-icon>
-      <mat-hint *ngIf="showHint('date')">*required</mat-hint>
+      <mat-hint *ngIf="showHint('time')">*required</mat-hint>
     </mat-form-field>
 
     <mat-form-field >
@@ -30,9 +30,13 @@
              matInput
              formControlName="city"
              (input)="inputChanged($event.target.value)">
-      <div class="city-weather" matSuffix><img [src]="getWeaterIcon()" alt=""></div>
-      <div class="city-weather" matSuffix *ngIf="!!loadingCity"><mat-spinner [diameter]="20"></mat-spinner></div>
-      <mat-hint *ngIf="!!weatherError">*{{weatherError.message}}</mat-hint>
+      <div class="city-weather" matSuffix *ngIf="!!weather">
+        <img [src]="getWeaterIcon()" alt="" (load)="loadingCity = false">
+      </div>
+      <div class="city-weather" matSuffix *ngIf="!!loadingCity">
+        <mat-spinner [diameter]="20"></mat-spinner>
+      </div>
+      <mat-hint *ngIf="!!form?.value.city && !!weatherError">*{{weatherError.message}}</mat-hint>
     </mat-form-field>
 
     <p>Color:</p>
